@@ -27,7 +27,7 @@ export function streamText(messages: Messages, env: Env, options?: StreamingOpti
     system: getSystemPrompt(),
     maxTokens: MAX_TOKENS,
     headers: {
-      'anthropic-beta': 'max-tokens-3-5-sonnet-2024-07-15',
+      'anthropic-beta': 'claude-code-20250514',
     },
     messages: convertToCoreMessages(messages),
     ...options,
