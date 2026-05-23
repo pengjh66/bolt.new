@@ -6,7 +6,9 @@ const JWT_EXPIRATION = '24h';
 
 function getEnvValue(key: string, cloudflareEnv: Env): string {
   const cfValue = (cloudflareEnv as Record<string, string>)[key];
-  return (env as Record<string, string | undefined>)[key] || cfValue || '';
+  const envValue = (env as Record<string, string | undefined>)[key];
+
+  return cfValue || envValue || '';
 }
 
 function getJwtSecret(cloudflareEnv: Env): Uint8Array {
