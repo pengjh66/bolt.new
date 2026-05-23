@@ -19,13 +19,16 @@ interface Message {
 
 export type Messages = Message[];
 
-export type StreamingOptions = Omit<Parameters<typeof _streamText>[0], 'model'>;
+export type StreamingOptions = Omit<Parameters<typeof _streamText>[0], 'model'> & {
+  modelOverride?: string;
+};
 
 export function streamText(messages: Messages, env: Env, options?: StreamingOptions) {
   const qiaApiKey = getQiaApiKey(env);
+  const modelName = options?.modelOverride || getQiaModel(env);
 
   const model = qiaApiKey
-    ? getQiaAnthropicModel(qiaApiKey, getQiaModel(env))
+    ? getQiaAnthropicModel(qiaApiKey, modelName)
     : getAnthropicModel(getAPIKey(env));
 
   return _streamText({

@@ -9,13 +9,14 @@ export async function action(args: ActionFunctionArgs) {
 }
 
 async function chatAction({ context, request }: ActionFunctionArgs) {
-  const { messages } = await request.json<{ messages: Messages }>();
+  const { messages, model } = await request.json<{ messages: Messages; model?: string }>();
 
   const stream = new SwitchableStream();
 
   try {
     const options: StreamingOptions = {
       toolChoice: 'none',
+      modelOverride: model,
       onFinish: async ({ text: content, finishReason }) => {
         if (finishReason !== 'length') {
           return stream.close();
