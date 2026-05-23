@@ -26,9 +26,6 @@ export function streamText(messages: Messages, env: Env, options?: StreamingOpti
     model: getAnthropicModel(getAPIKey(env)),
     system: getSystemPrompt(),
     maxTokens: MAX_TOKENS,
-    headers: {
-      'anthropic-beta': 'claude-code-20250514',
-    },
     messages: convertToCoreMessages(messages),
     ...options,
   });
