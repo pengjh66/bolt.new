@@ -1,0 +1,11 @@
+node_modules/
+.wrangler/
+build/
+.env.local
+.env.*.local
+*.vars
+.git/
+.gitignore
+README.md
+CONTRIBUTING.md
+.github/
