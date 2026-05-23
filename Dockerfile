@@ -11,6 +11,9 @@ COPY . .
 
 RUN pnpm run build
 
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
+
 EXPOSE 3000
 
-CMD ["pnpm", "wrangler", "pages", "dev", "./build/client", "--port", "3000", "--ip", "0.0.0.0"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
