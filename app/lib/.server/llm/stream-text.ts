@@ -1,6 +1,6 @@
 import { streamText as _streamText, convertToCoreMessages } from 'ai';
 import { getAPIKey, getQiaApiKey, getQiaModel } from '~/lib/.server/llm/api-key';
-import { getAnthropicModel, getQiaModel as getQiaAnthropicModel } from '~/lib/.server/llm/model';
+import { getAnthropicModel, getQiaModel as getQiaAnthropicModel, getQiaOpenAIModel } from '~/lib/.server/llm/model';
 import { MAX_TOKENS } from './constants';
 import { getSystemPrompt } from './prompts';
 
@@ -23,13 +23,29 @@ export type StreamingOptions = Omit<Parameters<typeof _streamText>[0], 'model'> 
   modelOverride?: string;
 };
 
+function isAnthropicModel(modelName: string): boolean {
+  return modelName.startsWith('claude-');
+}
+
 export function streamText(messages: Messages, env: Env, options?: StreamingOptions) {
   const qiaApiKey = getQiaApiKey(env);
   const modelName = options?.modelOverride || getQiaModel(env);
 
-  const model = qiaApiKey
+  if (!qiaApiKey) {
+    const model = getAnthropicModel(getAPIKey(env));
+
+    return _streamText({
+      model,
+      system: getSystemPrompt(),
+      maxTokens: MAX_TOKENS,
+      messages: convertToCoreMessages(messages),
+      ...options,
+    });
+  }
+
+  const model = isAnthropicModel(modelName)
     ? getQiaAnthropicModel(qiaApiKey, modelName)
-    : getAnthropicModel(getAPIKey(env));
+    : getQiaOpenAIModel(qiaApiKey, modelName);
 
   return _streamText({
     model,

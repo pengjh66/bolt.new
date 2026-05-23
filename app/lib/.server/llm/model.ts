@@ -1,15 +1,8 @@
 import { createAnthropic } from '@ai-sdk/anthropic';
+import { createOpenAI } from '@ai-sdk/openai';
 
-export function getAnthropicModel(apiKey: string) {
-  const anthropic = createAnthropic({
-    apiKey,
-  });
-
-  return anthropic('claude-sonnet-4-6');
-}
-
-export function getQiaModel(apiKey: string, modelName: string) {
-  const qiaFetch: typeof fetch = (input, init) => {
+function createQiaFetch(apiKey: string): typeof fetch {
+  return (input, init) => {
     const headers = new Headers(init?.headers);
 
     if (headers.has('x-api-key')) {
@@ -19,12 +12,31 @@ export function getQiaModel(apiKey: string, modelName: string) {
 
     return fetch(input, { ...init, headers });
   };
+}
 
+const QIA_BASE_URL = 'https://api.lk888.ai/api/v1';
+
+export function getAnthropicModel(apiKey: string) {
+  const anthropic = createAnthropic({ apiKey });
+  return anthropic('claude-sonnet-4-6');
+}
+
+export function getQiaModel(apiKey: string, modelName: string) {
   const anthropic = createAnthropic({
     apiKey,
-    baseURL: 'https://api.lk888.ai/api/v1',
-    fetch: qiaFetch,
+    baseURL: QIA_BASE_URL,
+    fetch: createQiaFetch(apiKey),
   });
 
   return anthropic(modelName);
+}
+
+export function getQiaOpenAIModel(apiKey: string, modelName: string) {
+  const openai = createOpenAI({
+    apiKey,
+    baseURL: QIA_BASE_URL,
+    fetch: createQiaFetch(apiKey),
+  });
+
+  return openai(modelName);
 }
