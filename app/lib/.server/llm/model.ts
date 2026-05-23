@@ -22,7 +22,7 @@ export function getQiaModel(apiKey: string, modelName: string) {
 
   const anthropic = createAnthropic({
     apiKey,
-    baseURL: 'https://api.lk888.ai/api',
+    baseURL: 'https://api.lk888.ai/api/v1',
     fetch: qiaFetch,
   });
 
