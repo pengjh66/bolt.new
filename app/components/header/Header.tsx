@@ -36,15 +36,6 @@ export function Header() {
           )}
         </ClientOnly>
       )}
-      <form action="/logout" method="post" className="ml-auto">
-        <button
-          type="submit"
-          title="Logout"
-          className="flex items-center justify-center w-8 h-8 rounded-md text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-background-depth-2 transition-colors"
-        >
-          <div className="i-ph:sign-out text-lg" />
-        </button>
-      </form>
     </header>
   );
 }

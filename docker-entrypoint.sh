@@ -7,14 +7,6 @@ if [ -n "$ANTHROPIC_API_KEY" ]; then
   echo "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY" > /app/.dev.vars
 fi
 
-if [ -n "$ADMIN_PASSWORD" ]; then
-  echo "ADMIN_PASSWORD=$ADMIN_PASSWORD" >> /app/.dev.vars
-fi
-
-if [ -n "$JWT_SECRET" ]; then
-  echo "JWT_SECRET=$JWT_SECRET" >> /app/.dev.vars
-fi
-
 if [ -n "$QIA_API_KEY" ]; then
   echo "QIA_API_KEY=$QIA_API_KEY" >> /app/.dev.vars
 fi
