@@ -1,7 +1,6 @@
 import { streamText as _streamText, convertToCoreMessages } from 'ai';
 import { getAPIKey, getQiaApiKey, getQiaModel } from '~/lib/.server/llm/api-key';
 import { getAnthropicModel, getQiaModel as getQiaAnthropicModel, getQiaOpenAIModel } from '~/lib/.server/llm/model';
-import { MAX_TOKENS } from './constants';
 import { getSystemPrompt } from './prompts';
 
 interface ToolResult<Name extends string, Args, Result> {
@@ -37,7 +36,6 @@ export function streamText(messages: Messages, env: Env, options?: StreamingOpti
     return _streamText({
       model,
       system: getSystemPrompt(),
-      maxTokens: MAX_TOKENS,
       messages: convertToCoreMessages(messages),
       ...options,
     });
@@ -50,7 +48,6 @@ export function streamText(messages: Messages, env: Env, options?: StreamingOpti
   return _streamText({
     model,
     system: getSystemPrompt(),
-    maxTokens: MAX_TOKENS,
     messages: convertToCoreMessages(messages),
     ...options,
   });
