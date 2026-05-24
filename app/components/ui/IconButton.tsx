@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import type React from 'react';
 import { classNames } from '~/utils/classNames';
 
 type IconSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';

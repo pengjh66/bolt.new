@@ -1,4 +1,5 @@
 import { AnimatePresence, cubicBezier, motion } from 'framer-motion';
+import type React from 'react';
 
 interface SendButtonProps {
   show: boolean;
